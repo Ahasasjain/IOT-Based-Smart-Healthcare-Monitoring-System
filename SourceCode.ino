@@ -1,14 +1,14 @@
-#define BLYNK_TEMPLATE_ID "TMPLPK3lJDbw"
-#define BLYNK_DEVICE_NAME "Quickstart Template"
-#define BLYNK_AUTH_TOKEN "YERwugtFiaGaoSL6dTmkqarXtAId_gV0"
+#define BLYNK_TEMPLATE_ID "paste your template id from blynk cloud here"
+#define BLYNK_DEVICE_NAME "paste your device name from blynk cloud here"
+#define BLYNK_AUTH_TOKEN "Paste your auth token from blynk cloud here"
 #include <Wire.h>
 #include "MAX30105.h"
 #include "heartRate.h"
 #include <ESP8266WiFi.h>
 #include <BlynkSimpleEsp8266.h>
-char auth[] = "YERwugtFiaGaoSL6dTmkqarXtAId_gV0";
-char ssid [] = "aj07jain";
-char pass [] = "jain1234";
+char auth[] = "Paste your auth token from blynk cloud here";
+char ssid [] = "Your Wifi SSID Here";
+char pass [] = "Your Wifi Password Here";
 float blynktemp;
 int blynkbeat;
 int blynkspo2;
@@ -111,19 +111,19 @@ void loop()
   Serial.print("IR=");
   Serial.print(irValue);
   Serial.print(", BPM=");
-  Serial.print(beatsPerMinute+70);
+  Serial.print(beatsPerMinute);
   Serial.print(", Avg BPM=");
-  Serial.print(beatAvg+70);
+  Serial.print(beatAvg);
 
 
   Serial.print(" ");
   perCent = irValue / irOffset;
   Serial.print("Oxygen=");
-  Serial.print(perCent+12);
+  Serial.print(perCent);
   Serial.print("%");
   //Serial.print((float)samplesTaken / ((millis() - startTime) / 1000.0), 2);
 
-  float temperatureF = particleSensor.readTemperatureF(); //Because I am a bad global citizen
+  float temperatureF = particleSensor.readTemperatureF();
   temperatureF = temperatureF + degOffset;
   
   Serial.print(" Temp(F)=");
@@ -167,24 +167,8 @@ void loop()
     avgTemp = 0;
   }
   Serial.println();
-  blynkbeat=beatAvg+70;
-  blynkspo2=perCent+12;
-
-  if(irValue>=50000&&blynkbeat>120){
-    Blynk.logEvent("high_heart_rate");
-  }
-  if(irValue>=50000&&blynkbeat<60){
-     Blynk.logEvent("low_heart_rate");
-  }
-  if(irValue>=50000&&blynkspo2<90){
-     Blynk.logEvent("low_oxygen_level");
-  }
-  if(irValue>=50000&&blynktemp>=38){
-     Blynk.logEvent("high_temperature");
-  }
-  if(irValue>=50000&&blynktemp<=35){
-     Blynk.logEvent("low_temperature_");
-  }
+  blynkbeat=beatAvg;
+  blynkspo2=perCent;
   
   Blynk.run();
   timer.run(); // Initiates BlynkTimer
